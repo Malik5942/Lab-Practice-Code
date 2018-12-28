@@ -22,16 +22,32 @@ server.post('/addUser', (req, res)=>{
     res.end('User is added')
 })
 
+// File Handling is going to start from here
 
-server.get('/createFile', (req, res)=>{
-    fs.writeFile('myNewfile.txt', "Hello Everyone", function (err){
+server.post('/createFile', (req, res)=>{
+    fs.appendFile('myFiles/myNewfile.txt', "Hello Everyone" + '\r\n', function (err){
         if(err) throw err;
-        res.send('File successfully created')
+           res.send('File successfully created')
     });
+ })
+                
+
+        
+
+server.get('/getData', (req, res)=>{
+    fs.readFile("myfiles/mynewfile.txt", 'utf8', function (err, data) {
+if (err) throw err;
+res.send(data)
+     });
 })
 
 
-
+server.delete('/deleteFile', (req, res)=>{
+    fs.unlink('myNewfile2.txt', function (err){
+    if (err) throw err;
+    res.send('File is successfully deleted')
+    });
+})
 
 server.get('/', (req, res)=>{
 
